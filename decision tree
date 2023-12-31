@@ -1,0 +1,40 @@
+import pandas as pd
+df = pd.read_excel("p3.xlsx")
+df.head()
+inputs = df.drop("y", axis="columns")
+output = df[['y']]
+inputs
+output
+from sklearn.preprocessing import LabelEncoder
+le_Job = LabelEncoder()
+le_MaritalStatus = LabelEncoder()
+le_Education = LabelEncoder()
+le_Default = LabelEncoder()
+le_Housing = LabelEncoder()
+le_Loan = LabelEncoder()
+le_Contact = LabelEncoder()
+le_Month = LabelEncoder()
+le_Poutcome = LabelEncoder()
+le_y = LabelEncoder()
+inputs['job_n'] = le_Job.fit_transform(inputs['job'])
+inputs['marital_n'] = le_MaritalStatus.fit_transform(inputs['marital'])
+inputs['education_n'] = le_Education.fit_transform(inputs['education'])
+inputs['default_n'] = le_Default.fit_transform(inputs['default'])
+inputs['housing_n'] = le_Housing.fit_transform(inputs['housing'])
+inputs['loan_n'] = le_Loan.fit_transform(inputs['loan'])
+inputs['contact_n'] = le_Contact.fit_transform(inputs['contact'])
+inputs['month_n'] = le_Month.fit_transform(inputs['month'])
+inputs['poutcome_n'] = le_Poutcome.fit_transform(inputs['poutcome'])
+output['y_n'] = le_y.fit_transform(output['y'])
+inputs = inputs.drop(['job','marital','education','default','housing','loan','contact','month','poutcome'], axis='columns')
+inputs
+output = output.drop('y', axis='columns')
+output
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(inputs, output, test_size=0.2)
+df.isnull().sum()
+df.hist(bins=10, figsize=(10, 6))
+plt.tight_layout()
+plt.show()
+df.corr()
+df.max()
